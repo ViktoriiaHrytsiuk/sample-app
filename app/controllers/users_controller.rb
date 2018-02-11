@@ -6,9 +6,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to new_user_path, notice: "Create new user"
+      flash[:success] = "Create new user"
+      redirect_to new_user_path
     else
-      redirect_to new_user_path, notice: "Error."
+      flash[:error] = @user.errors.full_messages.join(" , ")
+      redirect_to new_user_path
     end
   end
 
