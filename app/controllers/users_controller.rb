@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       flash[:success] = "Create new user"
       redirect_to new_user_path
     else
-      flash[:error] = @user.errors.full_messages.join(" , ")
+      flash[:danger] = @user.errors.full_messages.join(", ")
       redirect_to new_user_path
     end
   end
