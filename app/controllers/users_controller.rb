@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
 
   def index
@@ -36,13 +36,24 @@ class UsersController < ApplicationController
       flash[:success] = "Your profile updated"
       redirect_to @user
     else
-      flash[:danger] = @user.errors.full_messages.join(", ")
-      redirect_to edit_user_path
+      render 'edit'
+     # flash[:danger] = @user.errors.full_messages.join(", ")
+     # redirect_to edit_user_path
     end
    # redirect_to update_path
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+
   private
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 
   def user_params
     params.require(:user).permit(:name, :email,
