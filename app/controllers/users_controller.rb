@@ -72,4 +72,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
   end
+
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
+
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
 end
