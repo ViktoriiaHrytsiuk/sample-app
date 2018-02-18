@@ -13,4 +13,4 @@ ActionMailer::Base.smtp_settings = {
 :authentication  => :plain,
 }
 
-ActionMailer::Base.add_delivery_method = :smtp
+ActionMailer::Base.delivery_method = :smtp
