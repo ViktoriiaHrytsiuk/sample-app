@@ -37,9 +37,9 @@ class UsersController < ApplicationController
       flash[:success] = "Your profile updated"
       redirect_to @user
     else
+      flash[:danger] = @user.errors.full_messages.join(", ")
       render 'edit'
-     # flash[:danger] = @user.errors.full_messages.join(", ")
-     # redirect_to edit_user_path
+      # redirect_to edit_user_path
     end
    # redirect_to update_path
   end
