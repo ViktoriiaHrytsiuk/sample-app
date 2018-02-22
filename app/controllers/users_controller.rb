@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      UserMailer.account_activation(@user).deliver_now
+     # UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
@@ -38,10 +38,8 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'edit'
-     # flash[:danger] = @user.errors.full_messages.join(", ")
-     # redirect_to edit_user_path
+      # flash[:danger] = @user.errors.full_messages.join(", ")
     end
-   # redirect_to update_path
   end
 
   def destroy
@@ -51,10 +49,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def admin_user
-    redirect_to(root_url) unless current_user.admin?
-  end
 
   def user_params
     params.require(:user).permit(:name, :email,
@@ -74,13 +68,17 @@ class UsersController < ApplicationController
     redirect_to(root_url) unless current_user?(@user)
   end
 
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
+  # def create_activation_digest
+  #   self.activation_token  = User.new_token
+  #   self.activation_digest = User.digest(activation_token)
+  # end
+  #
+  # def remember
+  #   self.remember_token = User.new_token
+  #   update_attribute(:remember_digest, User.digest(remember_token))
+  # end
 
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
   end
 end

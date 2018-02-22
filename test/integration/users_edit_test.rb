@@ -14,13 +14,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                               password:              "foo",
                                               password_confirmation: "bar" } }
 
-   # assert_template 'users/edit'
+   assert_template 'users/edit'
   end
 
   test "successful edit with friendly forwarding" do
     get edit_user_path(@user)
     log_in_as(@user)
-    #session[:forwarding_url]
+    session[:forwarding_url]
     assert_redirected_to edit_user_url(@user)
     name  = "Foo Bar"
     email = "foo@bar.com"
